@@ -7,6 +7,7 @@ REPO_URL="${FILESEARCH_REPO_URL:-https://github.com/cosmaut/FileSearch.git}"
 REPO_BRANCH="${FILESEARCH_REPO_BRANCH:-main}"
 DEFAULT_INSTALL_DIR="/opt/FileSearch"
 GLOBAL_CMD_PATH="/usr/local/bin/filesearch"
+LAST_STASH_REF=""
 
 if [[ -d "/www/wwwroot" ]]; then
   DEFAULT_INSTALL_DIR="/www/wwwroot/FileSearch"
@@ -33,6 +34,28 @@ log_error() {
 
 command_exists() {
   command -v "$1" >/dev/null 2>&1
+}
+
+backup_local_changes_if_needed() {
+  local status_output stash_message stash_before stash_after
+
+  status_output="$(git -C "${INSTALL_DIR}" status --porcelain)"
+  if [[ -z "${status_output}" ]]; then
+    return 0
+  fi
+
+  log_warn "检测到安装目录存在本地修改，正在自动备份后再更新代码..."
+  stash_message="filesearch-installer-auto-backup-$(date +%Y%m%d%H%M%S)"
+  stash_before="$(git -C "${INSTALL_DIR}" stash list | head -n 1 || true)"
+  git -C "${INSTALL_DIR}" stash push --include-untracked -m "${stash_message}" >/dev/null
+  stash_after="$(git -C "${INSTALL_DIR}" stash list | head -n 1 || true)"
+
+  if [[ -n "${stash_after}" && "${stash_after}" != "${stash_before}" ]]; then
+    LAST_STASH_REF="${stash_after%%:*}"
+    log_info "已将本地修改备份到 Git stash：${LAST_STASH_REF}"
+  else
+    log_warn "未能确认 stash 条目，请稍后手动执行 git stash list 检查备份是否成功。"
+  fi
 }
 
 require_root() {
@@ -155,6 +178,7 @@ sync_repository() {
   if [[ -d "${INSTALL_DIR}/.git" ]]; then
     log_info "检测到已有 FileSearch 安装目录，正在更新到最新版本..."
     git -C "${INSTALL_DIR}" fetch --all --tags --prune
+    backup_local_changes_if_needed
     git -C "${INSTALL_DIR}" checkout "${REPO_BRANCH}"
     git -C "${INSTALL_DIR}" pull --ff-only origin "${REPO_BRANCH}"
     return 0
@@ -187,6 +211,9 @@ print_install_summary() {
   echo "全局命令: ${GLOBAL_CMD_PATH}"
   echo "仓库地址: ${REPO_URL}"
   echo "分支: ${REPO_BRANCH}"
+  if [[ -n "${LAST_STASH_REF}" ]]; then
+    echo "本地备份: ${LAST_STASH_REF}（如需恢复，可在项目目录执行 git stash pop ${LAST_STASH_REF}）"
+  fi
   echo
   echo "后续可直接使用："
   echo "  filesearch               打开部署助手"

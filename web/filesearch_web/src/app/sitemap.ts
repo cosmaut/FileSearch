@@ -1,8 +1,7 @@
 import type { MetadataRoute } from "next";
 import { getRankingLandingUrls, readRankingDataset } from "@/lib/rankings";
 import { rankingsEnabled } from "@/lib/rankings-config";
-
-const siteUrl = "https://search.freeanime.org";
+import { siteUrl } from "@/lib/site-config";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const entries: MetadataRoute.Sitemap = [

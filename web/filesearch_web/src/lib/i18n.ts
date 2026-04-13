@@ -196,7 +196,7 @@ const translations: Record<Language, Translations> = {
       cancel: "取消",
       prevPage: "上一页",
       nextPage: "下一页",
-      starCallout: "如果你觉得 Limitless-search 很好用请给我们一个 star",
+      starCallout: "如果你觉得 FileSearch 很好用请给我们一个 star",
       starCta: "GitHub Star",
       statsPlatformsLabel: "平台来源",
       statsIpLabel: "请求IP",
@@ -232,14 +232,14 @@ const translations: Record<Language, Translations> = {
       },
     },
     donate: {
-      title: "捐助 Freeanime.org",
-      description: "当然你也可以捐助我们，你的捐助将利用于完善社区和组织延续，感谢！",
+      title: "支持 FileSearch",
+      description: "你也可以支持 FileSearch，帮助我们持续改进搜索体验与服务稳定性，感谢你的支持。",
       noAds: "我们不需要商业的广告",
-      poweredBy: "Freeanime.org 由 Maishan Inc. 提供技术与资金支持",
+      poweredBy: "FileSearch 由 Cosmaut 维护与提供技术支持",
       supportedMethods: "支持的捐助方式",
       methodDesc: "暂时仅支持 使用solana区块链向我们发送USDT",
       addressNote: "我们会在捐助页面不间断更新捐助名单",
-      advantagesTitle: "Freeanime.org 有什么优势",
+      advantagesTitle: "FileSearch 有什么优势",
       advantages: [
         "无广告",
         "多语言支持",
@@ -274,8 +274,8 @@ const translations: Record<Language, Translations> = {
     about: {
       title: "关于 FileSearch",
       content:
-        "FileSearch 由 Maishan Inc. 与 SMV 维护，统一接口聚合网盘动漫资源，免登录即可快速搜索。",
-      contact: "FileSearch Powered by Maishan Inc.",
+        "FileSearch 由 Cosmaut 维护，统一接口聚合网盘动漫资源，免登录即可快速搜索。",
+      contact: "FileSearch by Cosmaut",
       license: "FileSearch 采用 CC BY-NC 4.0 (署名-非商业性使用 4.0 国际) 许可证",
     },
     footer: {
@@ -285,8 +285,7 @@ const translations: Record<Language, Translations> = {
       regions: "支持的地区",
       cookies: "管理 Cookies",
       doNotShare: "不分享我的个人信息",
-      rights:
-        "Copyright © {year} Maishan Inc. All rights reserved FileSearch",
+      rights: "Copyright © {year} FileSearch. All rights reserved.",
     },
   },
   "zh-TW": {
@@ -316,7 +315,7 @@ const translations: Record<Language, Translations> = {
       cancel: "取消",
       prevPage: "上一頁",
       nextPage: "下一頁",
-      starCallout: "如果你覺得 Limitless-search 很好用請給我們一個 star",
+      starCallout: "如果你觉得 FileSearch 很好用，请给我们一个 star",
       starCta: "GitHub Star",
       statsPlatformsLabel: "平台來源",
       statsIpLabel: "請求IP",
@@ -352,14 +351,14 @@ const translations: Record<Language, Translations> = {
       },
     },
     donate: {
-      title: "贊助 Freeanime.org",
-      description: "當然你也可以捐助我們，你的捐助將利用於完善社群和組織延續，感謝！",
+      title: "支持 FileSearch",
+      description: "你也可以支持 FileSearch，幫助我們持續改進搜尋體驗與服務穩定性，感謝你的支持。",
       noAds: "我們不需要商業的廣告",
-      poweredBy: "Freeanime.org 由 Maishan Inc. 提供技術與資金支持",
+      poweredBy: "FileSearch 由 Cosmaut 維護並提供技術支持",
       supportedMethods: "支援的贊助方式",
       methodDesc: "暫時僅支援 使用solana區塊鏈向我們發送USDT",
       addressNote: "我們會在贊助頁面不間斷更新贊助名單",
-      advantagesTitle: "Freeanime.org 的優勢",
+      advantagesTitle: "FileSearch 的優勢",
       advantages: [
         "無廣告",
         "多語言支援",
@@ -376,7 +375,7 @@ const translations: Record<Language, Translations> = {
       seconds: "秒",
     },
     drives: {
-      title: "Limitless Search 支援",
+      title: "FileSearch 支援",
       baidu: "百度網盤",
       aliyun: "阿里雲盤",
       quark: "夸克網盤",
@@ -394,8 +393,8 @@ const translations: Record<Language, Translations> = {
     about: {
       title: "關於 FileSearch",
       content:
-        "FileSearch 由 Maishan Inc. 與 SMV 維護，統一介面聚合網盤動漫資源，免登入即可快速搜尋。",
-      contact: "FileSearch Powered by Maishan Inc.",
+        "FileSearch 由 Cosmaut 維護，統一介面聚合網盤動漫資源，免登入即可快速搜尋。",
+      contact: "FileSearch by Cosmaut",
       license: "FileSearch 採用 CC BY-NC 4.0 (署名-非商業性使用 4.0 國際) 許可證",
     },
     footer: {
@@ -405,8 +404,7 @@ const translations: Record<Language, Translations> = {
       regions: "支援的地區",
       cookies: "管理 Cookies",
       doNotShare: "不要分享我的個人資訊",
-      rights:
-        "Copyright © {year} Maishan Inc. All rights reserved FileSearch",
+      rights: "Copyright © {year} FileSearch. All rights reserved.",
     },
   },
   en: {
@@ -436,7 +434,7 @@ const translations: Record<Language, Translations> = {
       cancel: "Cancel",
       prevPage: "Previous",
       nextPage: "Next",
-      starCallout: "If Limitless-search helps you, please give us a star",
+      starCallout: "If FileSearch helps you, please give us a star",
       starCta: "GitHub Star",
       statsPlatformsLabel: "Platforms",
       statsIpLabel: "Client IP",
@@ -474,14 +472,14 @@ const translations: Record<Language, Translations> = {
       },
     },
     donate: {
-      title: "Donate to Freeanime.org",
-      description: "You can also donate to us. Your donation will be used to improve the community and sustain the organization. Thank you!",
+      title: "Support FileSearch",
+      description: "You can also support FileSearch. Your support helps improve the search experience and keep the service running reliably. Thank you!",
       noAds: "We don't need commercial advertising",
-      poweredBy: "Freeanime.org is powered by Maishan Inc. with technical and financial support",
+      poweredBy: "FileSearch is maintained and technically supported by Cosmaut",
       supportedMethods: "Supported Donation Methods",
       methodDesc: "Currently only supports sending USDT via Solana blockchain",
       addressNote: "We will continuously update the donation list on the donation page",
-      advantagesTitle: "Why Freeanime.org",
+      advantagesTitle: "Why FileSearch",
       advantages: [
         "No Ads",
         "Multi-language",
@@ -498,7 +496,7 @@ const translations: Record<Language, Translations> = {
       seconds: "Seconds",
     },
     drives: {
-      title: "Limitless Search supports",
+      title: "FileSearch supports",
       baidu: "Baidu Netdisk",
       aliyun: "Aliyun Drive",
       quark: "Quark Drive",
@@ -516,8 +514,8 @@ const translations: Record<Language, Translations> = {
     about: {
       title: "About FileSearch",
       content:
-        "FileSearch, maintained by Maishan Inc. & SMV, unifies cloud search so you can find anime resources quickly without logging in.",
-      contact: "FileSearch Powered by Maishan Inc.",
+        "FileSearch, maintained by Cosmaut, unifies cloud search so you can find anime resources quickly without logging in.",
+      contact: "FileSearch by Cosmaut",
       license: "FileSearch is licensed under CC BY-NC 4.0 (Attribution-NonCommercial 4.0 International)",
     },
     footer: {
@@ -527,8 +525,7 @@ const translations: Record<Language, Translations> = {
       regions: "Supported Regions",
       cookies: "Manage Cookies",
       doNotShare: "Do Not Share My Personal Info",
-      rights:
-        "Copyright © {year} Maishan Inc. All rights reserved FileSearch",
+      rights: "Copyright © {year} FileSearch. All rights reserved.",
     },
   },
   ja: {
@@ -558,7 +555,7 @@ const translations: Record<Language, Translations> = {
       cancel: "キャンセル",
       prevPage: "前へ",
       nextPage: "次へ",
-      starCallout: "Limitless-search が役立ったら、スターをお願いします",
+      starCallout: "FileSearch が役立ったら、スターをお願いします",
       starCta: "GitHub Star",
       statsPlatformsLabel: "プラットフォーム数",
       statsIpLabel: "リクエストIP",
@@ -596,14 +593,14 @@ const translations: Record<Language, Translations> = {
       },
     },
     donate: {
-      title: "Freeanime.org に寄付",
-      description: "寄付していただくことも可能です。あなたの寄付はコミュニティの改善と組織の継続に使用されます。ありがとうございます！",
+      title: "FileSearch を支援",
+      description: "FileSearch を支援していただくことも可能です。ご支援は検索体験の改善と安定運用に活用されます。ありがとうございます。",
       noAds: "私たちは商業広告を必要としません",
-      poweredBy: "Freeanime.org は Maishan Inc. の技術的・資金的支援により運営されています",
+      poweredBy: "FileSearch は Cosmaut により保守され、技術支援されています",
       supportedMethods: "対応している寄付方法",
       methodDesc: "現在は Solana ブロックチェーン経由での USDT 送金のみ対応しています",
       addressNote: "寄付者リストは寄付ページにて随時更新されます",
-      advantagesTitle: "Freeanime.org の強み",
+      advantagesTitle: "FileSearch の強み",
       advantages: [
         "広告なし",
         "多言語対応",
@@ -620,7 +617,7 @@ const translations: Record<Language, Translations> = {
       seconds: "秒",
     },
     drives: {
-      title: "Limitless Search が対応",
+      title: "FileSearch が対応",
       baidu: "Baidu Netdisk",
       aliyun: "Aliyun Drive",
       quark: "Quark Drive",
@@ -638,8 +635,8 @@ const translations: Record<Language, Translations> = {
     about: {
       title: "FileSearch とは",
       content:
-        "FileSearch は Maishan Inc. と SMV が運営し、ログイン不要でアニメ資源を素早く見つけられる統合クラウド検索です。",
-      contact: "FileSearch Powered by Maishan Inc.",
+        "FileSearch は Cosmaut が保守し、ログイン不要でアニメ資源を素早く見つけられる統合クラウド検索です。",
+      contact: "FileSearch by Cosmaut",
       license: "FileSearch は CC BY-NC 4.0 (表示-非営利 4.0 国際) ライセンスの下で提供されています",
     },
     footer: {
@@ -649,8 +646,7 @@ const translations: Record<Language, Translations> = {
       regions: "対応地域",
       cookies: "Cookie の管理",
       doNotShare: "個人情報を共有しない",
-      rights:
-        "Copyright © {year} Maishan Inc. All rights reserved FileSearch",
+      rights: "Copyright © {year} FileSearch. All rights reserved.",
     },
   },
   ru: {
@@ -680,7 +676,7 @@ const translations: Record<Language, Translations> = {
       cancel: "Отмена",
       prevPage: "Назад",
       nextPage: "Вперед",
-      starCallout: "Если Limitless-search помогает вам, пожалуйста, поставьте звезду",
+      starCallout: "Если FileSearch помогает вам, пожалуйста, поставьте звезду",
       starCta: "GitHub Star",
       statsPlatformsLabel: "Платформы",
       statsIpLabel: "IP клиента",
@@ -718,14 +714,14 @@ const translations: Record<Language, Translations> = {
       },
     },
     donate: {
-      title: "Пожертвовать Freeanime.org",
-      description: "Вы также можете сделать пожертвование. Ваше пожертвование будет использовано для улучшения сообщества и поддержания организации. Спасибо!",
+      title: "Поддержать FileSearch",
+      description: "Вы также можете поддержать FileSearch. Ваша поддержка помогает улучшать поиск и поддерживать стабильную работу сервиса. Спасибо!",
       noAds: "Нам не нужна коммерческая реклама",
-      poweredBy: "Freeanime.org работает при технической и финансовой поддержке Maishan Inc.",
+      poweredBy: "FileSearch поддерживается и развивается Cosmaut",
       supportedMethods: "Поддерживаемые способы пожертвования",
       methodDesc: "В настоящее время поддерживается только отправка USDT через блокчейн Solana",
       addressNote: "Мы будем постоянно обновлять список пожертвований на странице пожертвований",
-      advantagesTitle: "Преимущества Freeanime.org",
+      advantagesTitle: "Преимущества FileSearch",
       advantages: [
         "Без рекламы",
         "Мультиязычность",
@@ -742,7 +738,7 @@ const translations: Record<Language, Translations> = {
       seconds: "Секунд",
     },
     drives: {
-      title: "Limitless Search поддерживает",
+      title: "FileSearch поддерживает",
       baidu: "Baidu Netdisk",
       aliyun: "Aliyun Drive",
       quark: "Quark Drive",
@@ -760,8 +756,8 @@ const translations: Record<Language, Translations> = {
     about: {
       title: "О FileSearch",
       content:
-        "FileSearch, поддерживаемый Maishan Inc. и SMV, объединяет облачные поиски, позволяя быстро находить аниме без входа.",
-      contact: "FileSearch Powered by Maishan Inc.",
+        "FileSearch, поддерживаемый Cosmaut, объединяет облачные поиски, позволяя быстро находить аниме без входа.",
+      contact: "FileSearch by Cosmaut",
       license: "FileSearch распространяется под лицензией CC BY-NC 4.0 (Attribution-NonCommercial 4.0 International)",
     },
     footer: {
@@ -771,8 +767,7 @@ const translations: Record<Language, Translations> = {
       regions: "Поддерживаемые регионы",
       cookies: "Управление Cookies",
       doNotShare: "Не передавать мои персональные данные",
-      rights:
-        "Copyright © {year} Maishan Inc. All rights reserved FileSearch",
+      rights: "Copyright © {year} FileSearch. All rights reserved.",
     },
   },
   fr: {
@@ -802,7 +797,7 @@ const translations: Record<Language, Translations> = {
       cancel: "Annuler",
       prevPage: "Précédent",
       nextPage: "Suivant",
-      starCallout: "Si Limitless-search vous aide, merci de nous donner une étoile",
+      starCallout: "Si FileSearch vous aide, merci de nous donner une étoile",
       starCta: "GitHub Star",
       statsPlatformsLabel: "Plateformes",
       statsIpLabel: "IP de la requête",
@@ -840,14 +835,14 @@ const translations: Record<Language, Translations> = {
       },
     },
     donate: {
-      title: "Faire un don à Freeanime.org",
-      description: "Vous pouvez également nous faire un don. Votre don sera utilisé pour améliorer la communauté et soutenir l'organisation. Merci !",
+      title: "Soutenir FileSearch",
+      description: "Vous pouvez aussi soutenir FileSearch. Votre soutien aide a améliorer la recherche et a garder le service stable. Merci !",
       noAds: "Nous n'avons pas besoin de publicité commerciale",
-      poweredBy: "Freeanime.org est soutenu par Maishan Inc. avec un support technique et financier",
+      poweredBy: "FileSearch est maintenu et soutenu techniquement par Cosmaut",
       supportedMethods: "Méthodes de don prises en charge",
       methodDesc: "Actuellement, seul l'envoi d'USDT via la blockchain Solana est pris en charge",
       addressNote: "Nous mettrons continuellement à jour la liste des dons sur la page de dons",
-      advantagesTitle: "Les atouts de Freeanime.org",
+      advantagesTitle: "Les atouts de FileSearch",
       advantages: [
         "Sans publicité",
         "Multilingue",
@@ -864,7 +859,7 @@ const translations: Record<Language, Translations> = {
       seconds: "Secondes",
     },
     drives: {
-      title: "Limitless Search prend en charge",
+      title: "FileSearch prend en charge",
       baidu: "Baidu Netdisk",
       aliyun: "Aliyun Drive",
       quark: "Quark Drive",
@@ -882,8 +877,8 @@ const translations: Record<Language, Translations> = {
     about: {
       title: "À propos de FileSearch",
       content:
-        "FileSearch, maintenu par Maishan Inc. et SMV, unifie la recherche cloud pour trouver rapidement des animés sans connexion.",
-      contact: "FileSearch Powered by Maishan Inc.",
+        "FileSearch, maintenu par Cosmaut, unifie la recherche cloud pour trouver rapidement des animés sans connexion.",
+      contact: "FileSearch by Cosmaut",
       license: "FileSearch est sous licence CC BY-NC 4.0 (Attribution-Pas d'Utilisation Commerciale 4.0 International)",
     },
     footer: {
@@ -893,8 +888,7 @@ const translations: Record<Language, Translations> = {
       regions: "Régions prises en charge",
       cookies: "Gérer les cookies",
       doNotShare: "Ne pas partager mes informations personnelles",
-      rights:
-        "Copyright © {year} Maishan Inc. All rights reserved FileSearch",
+      rights: "Copyright © {year} FileSearch. All rights reserved.",
     },
   },
 };

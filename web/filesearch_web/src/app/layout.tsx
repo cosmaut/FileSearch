@@ -4,17 +4,16 @@ import { headers } from "next/headers";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { detectPreferredLanguage, languageToLocale } from "@/lib/i18n";
-
-const siteUrl = "https://search.freeanime.org";
+import { siteBrand, siteRepositoryUrl, siteUrl } from "@/lib/site-config";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "FileSearch | 文件搜索",
-    template: "%s | FileSearch",
+    default: `${siteBrand} | 文件搜索`,
+    template: `%s | ${siteBrand}`,
   },
   description:
-    "FileSearch（文件搜索）- 免费搜索动漫与网盘资源，无需登录，快速聚合多平台结果。",
+    `${siteBrand}（文件搜索）- 免费搜索动漫与网盘资源，无需登录，快速聚合多平台结果。`,
   keywords: [
     "FileSearch",
     "文件搜索",
@@ -46,17 +45,17 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: "FileSearch | 文件搜索",
+    title: `${siteBrand} | 文件搜索`,
     description:
       "免费搜索动漫与网盘资源，无需登录，快速聚合多平台结果。",
     url: siteUrl,
-    siteName: "FileSearch",
+    siteName: siteBrand,
     locale: "zh_CN",
     type: "website",
   },
   twitter: {
     card: "summary",
-    title: "FileSearch | 文件搜索",
+    title: `${siteBrand} | 文件搜索`,
     description:
       "免费搜索动漫与网盘资源，无需登录，快速聚合多平台结果。",
   },
@@ -86,12 +85,12 @@ export default async function RootLayout({
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "WebSite",
-              name: "FileSearch",
+              name: siteBrand,
               alternateName: "文件搜索",
               url: siteUrl,
               description:
                 "免费搜索动漫与网盘资源，无需登录，快速聚合多平台结果。",
-              sameAs: ["https://github.com/cosmaut/FileSearch"],
+              sameAs: [siteRepositoryUrl],
               inLanguage: ["zh-CN", "zh-TW", "en", "ja", "ru", "fr"],
             }),
           }}

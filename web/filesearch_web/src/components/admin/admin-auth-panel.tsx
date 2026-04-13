@@ -5,6 +5,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { AlertCircle, ArrowRight, KeyRound, Loader2, ShieldCheck, Sparkles } from "lucide-react";
 import type { AdminBootstrapState } from "@/lib/admin-preview";
+import { adminEmailPlaceholder } from "@/lib/site-config";
 
 declare global {
   interface Window {
@@ -307,7 +308,7 @@ export function AdminAuthPanel({ bootstrap }: AdminAuthPanelProps) {
                 type="email"
                 value={email}
                 onChange={(event) => setEmail(event.target.value)}
-                placeholder="admin@freeanime.org"
+                placeholder={adminEmailPlaceholder}
                 className="w-full rounded-2xl border border-neutral-200 bg-white px-4 py-3 text-sm outline-none transition-colors placeholder:text-neutral-400 focus:border-neutral-400 dark:border-neutral-800 dark:bg-neutral-900 dark:text-white"
               />
             </div>

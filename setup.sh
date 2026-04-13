@@ -30,6 +30,10 @@ log_error() {
   echo -e "${red}$1${plain}"
 }
 
+newline() {
+  echo
+}
+
 command_exists() {
   command -v "$1" >/dev/null 2>&1
 }
@@ -47,7 +51,14 @@ ensure_compose_ready() {
 }
 
 generate_secret() {
-  tr -dc 'A-Za-z0-9' </dev/urandom | head -c 64
+  local secret
+
+  # 在 pipefail 打开时，head 提前退出会让上游 tr 返回非 0，导致脚本误判失败。
+  set +o pipefail
+  secret="$(tr -dc 'A-Za-z0-9' </dev/urandom | head -c 64 || true)"
+  set -o pipefail
+
+  printf '%s' "${secret}"
 }
 
 read_env_value() {
@@ -74,6 +85,22 @@ read_env_value() {
   fi
 
   printf '%s' "${default}"
+}
+
+read_current_env_value() {
+  local key line value
+  key="${1:?}"
+
+  if [[ -f "${ENV_FILE}" ]]; then
+    line="$(grep -E "^${key}=" "${ENV_FILE}" | tail -n 1 || true)"
+    if [[ -n "${line}" ]]; then
+      value="${line#*=}"
+      printf '%s' "${value}"
+      return 0
+    fi
+  fi
+
+  printf '%s' ""
 }
 
 prompt_text() {
@@ -151,11 +178,11 @@ select_captcha_provider() {
   local current choice
   current="${1:-none}"
 
-  echo "请选择验证码提供方："
-  echo "1. none（不启用）"
-  echo "2. turnstile"
-  echo "3. hcaptcha"
-  read -r -p "输入选项 [当前: ${current}]: " choice
+  echo "请选择验证码提供方：" >&2
+  echo "1. none（不启用）" >&2
+  echo "2. turnstile" >&2
+  echo "3. hcaptcha" >&2
+  read -r -p "输入选项 [当前: ${current}]: " choice >&2
 
   case "${choice:-}" in
     "" )
@@ -193,6 +220,7 @@ AUTH_TOKEN_EXPIRY=${AUTH_TOKEN_EXPIRY}
 AUTH_JWT_SECRET=${AUTH_JWT_SECRET}
 
 NEXT_PUBLIC_API_BASE=${NEXT_PUBLIC_API_BASE}
+NEXT_PUBLIC_SITE_URL=${NEXT_PUBLIC_SITE_URL}
 NEXT_PUBLIC_CAPTCHA_PROVIDER=${NEXT_PUBLIC_CAPTCHA_PROVIDER}
 NEXT_PUBLIC_TURNSTILE_SITE_KEY=${NEXT_PUBLIC_TURNSTILE_SITE_KEY}
 TURNSTILE_SECRET_KEY=${TURNSTILE_SECRET_KEY}
@@ -223,13 +251,16 @@ EOF
 }
 
 show_summary() {
+  local auth_user_display
   echo "=============================="
   echo "FileSearch 配置摘要"
   echo "=============================="
   echo "认证启用: ${AUTH_ENABLED}"
   if [[ "${AUTH_ENABLED}" == "true" ]]; then
-    echo "认证用户: ${AUTH_USERS%%,*}"
+    auth_user_display="${AUTH_USERS%%:*}"
+    echo "认证用户: ${auth_user_display}"
   fi
+  echo "站点地址: ${NEXT_PUBLIC_SITE_URL}"
   echo "验证码: ${NEXT_PUBLIC_CAPTCHA_PROVIDER}"
   echo "AI 推荐: ${NEXT_PUBLIC_AI_SUGGEST_ENABLED}"
   echo "AI 排行榜: ${AI_RANKINGS_ENABLED}"
@@ -238,7 +269,7 @@ show_summary() {
 
 run_wizard() {
   local existing_auth_users admin_user generated_password generated_secret current_captcha current_ai current_rankings
-  local captcha_provider reuse_ai_rankings
+  local captcha_provider
 
   echo "=============================="
   echo "FileSearch 交互式部署向导 v${VERSION}"
@@ -247,6 +278,7 @@ run_wizard() {
   echo
 
   NEXT_PUBLIC_API_BASE="$(read_env_value NEXT_PUBLIC_API_BASE "http://127.0.0.1:8888")"
+  NEXT_PUBLIC_SITE_URL="$(read_env_value NEXT_PUBLIC_SITE_URL "http://localhost:3200")"
   AUTH_TOKEN_EXPIRY="$(read_env_value AUTH_TOKEN_EXPIRY "24")"
   NEXT_PUBLIC_AI_SUGGEST_THRESHOLD="$(read_env_value NEXT_PUBLIC_AI_SUGGEST_THRESHOLD "50")"
   AI_RANKINGS_RUN_AT="$(read_env_value AI_RANKINGS_RUN_AT "03:00")"
@@ -257,7 +289,12 @@ run_wizard() {
   ADMIN_DATA_DIR="$(read_env_value ADMIN_DATA_DIR "/app/data/admin")"
   AI_SUGGEST_PROMPT="$(read_env_value AI_SUGGEST_PROMPT "")"
 
+  NEXT_PUBLIC_SITE_URL="$(prompt_text "站点公开访问地址（用于 SEO / canonical / sitemap）" "${NEXT_PUBLIC_SITE_URL}")"
+  newline
+  log_info "已设置站点地址：${NEXT_PUBLIC_SITE_URL}"
+
   if prompt_yes_no "是否启用后台认证（推荐）？" "$( [[ "$(read_env_value AUTH_ENABLED "true")" == "true" ]] && echo y || echo n )"; then
+    newline
     AUTH_ENABLED="true"
     existing_auth_users="$(read_env_value AUTH_USERS "")"
     admin_user="${existing_auth_users%%:*}"
@@ -265,31 +302,45 @@ run_wizard() {
       admin_user="admin"
     fi
     admin_user="$(prompt_text "管理员用户名" "${admin_user}")"
+    newline
+    log_info "已设置管理员用户名：${admin_user}"
 
     generated_password="$(generate_secret | head -c 20)"
     admin_password="$(prompt_secret "管理员密码（建议不要包含空格或 #）" "" "false" "${generated_password}")"
+    newline
     if [[ "${admin_password}" == "${generated_password}" ]]; then
       log_info "已自动生成管理员密码：${admin_password}"
+    else
+      log_info "管理员密码已设置。"
     fi
 
     AUTH_USERS="${admin_user}:${admin_password}"
     AUTH_TOKEN_EXPIRY="$(prompt_text "Token 过期时间（小时）" "${AUTH_TOKEN_EXPIRY}")"
+    newline
+    log_info "已设置 Token 过期时间：${AUTH_TOKEN_EXPIRY} 小时"
 
     generated_secret="$(generate_secret)"
-    AUTH_JWT_SECRET="$(prompt_secret "AUTH_JWT_SECRET（留空自动生成）" "$(read_env_value AUTH_JWT_SECRET "")" "false" "${generated_secret}")"
+    AUTH_JWT_SECRET="$(prompt_secret "AUTH_JWT_SECRET（留空自动生成）" "$(read_current_env_value AUTH_JWT_SECRET)" "false" "${generated_secret}")"
+    newline
     if [[ "${AUTH_JWT_SECRET}" == "${generated_secret}" ]]; then
       log_info "已自动生成 AUTH_JWT_SECRET。"
+    else
+      log_info "AUTH_JWT_SECRET 已设置。"
     fi
   else
+    newline
     AUTH_ENABLED="false"
     AUTH_USERS=""
     AUTH_TOKEN_EXPIRY="24"
     AUTH_JWT_SECRET=""
+    log_info "已关闭后台认证。"
   fi
 
   current_captcha="$(read_env_value NEXT_PUBLIC_CAPTCHA_PROVIDER "none")"
   captcha_provider="$(select_captcha_provider "${current_captcha}")"
+  newline
   NEXT_PUBLIC_CAPTCHA_PROVIDER="${captcha_provider}"
+  log_info "已选择验证码提供方：${NEXT_PUBLIC_CAPTCHA_PROVIDER}"
   NEXT_PUBLIC_TURNSTILE_SITE_KEY=""
   TURNSTILE_SECRET_KEY=""
   NEXT_PUBLIC_HCAPTCHA_SITE_KEY=""
@@ -299,71 +350,102 @@ run_wizard() {
     turnstile)
       NEXT_PUBLIC_TURNSTILE_SITE_KEY="$(prompt_text "Turnstile Site Key" "$(read_env_value NEXT_PUBLIC_TURNSTILE_SITE_KEY "")")"
       TURNSTILE_SECRET_KEY="$(prompt_text "Turnstile Secret Key" "$(read_env_value TURNSTILE_SECRET_KEY "")")"
+      newline
+      log_info "Turnstile 配置已更新。"
       ;;
     hcaptcha)
       NEXT_PUBLIC_HCAPTCHA_SITE_KEY="$(prompt_text "hCaptcha Site Key" "$(read_env_value NEXT_PUBLIC_HCAPTCHA_SITE_KEY "")")"
       HCAPTCHA_SECRET_KEY="$(prompt_text "hCaptcha Secret Key" "$(read_env_value HCAPTCHA_SECRET_KEY "")")"
+      newline
+      log_info "hCaptcha 配置已更新。"
       ;;
   esac
 
   current_ai="$(read_env_value NEXT_PUBLIC_AI_SUGGEST_ENABLED "false")"
   if prompt_yes_no "是否启用 AI 推荐？" "$( [[ "${current_ai}" == "true" ]] && echo y || echo n )"; then
+    newline
     NEXT_PUBLIC_AI_SUGGEST_ENABLED="true"
     AI_SUGGEST_BASE_URL="$(prompt_text "AI 接口地址（OpenAI 兼容）" "$(read_env_value AI_SUGGEST_BASE_URL "")")"
     AI_SUGGEST_MODEL="$(prompt_text "AI 模型名称" "$(read_env_value AI_SUGGEST_MODEL "")")"
     AI_SUGGEST_API_KEY="$(prompt_text "AI API Key" "$(read_env_value AI_SUGGEST_API_KEY "")")"
     NEXT_PUBLIC_AI_SUGGEST_THRESHOLD="$(prompt_text "AI 触发阈值" "${NEXT_PUBLIC_AI_SUGGEST_THRESHOLD}")"
+    newline
+    log_info "AI 推荐已启用。"
 
     if [[ "${NEXT_PUBLIC_CAPTCHA_PROVIDER}" != "none" ]] && prompt_yes_no "AI 推荐是否要求先通过验证码？" "$( [[ "$(read_env_value NEXT_PUBLIC_AI_SUGGEST_REQUIRE_CAPTCHA "false")" == "true" ]] && echo y || echo n )"; then
+      newline
       NEXT_PUBLIC_AI_SUGGEST_REQUIRE_CAPTCHA="true"
+      log_info "AI 推荐将要求先通过验证码。"
     else
+      newline
       NEXT_PUBLIC_AI_SUGGEST_REQUIRE_CAPTCHA="false"
       if [[ "${NEXT_PUBLIC_CAPTCHA_PROVIDER}" == "none" ]]; then
         log_warn "当前未启用验证码，AI 推荐将不会要求先验证。"
+      else
+        log_info "AI 推荐将不要求先通过验证码。"
       fi
     fi
   else
+    newline
     NEXT_PUBLIC_AI_SUGGEST_ENABLED="false"
     NEXT_PUBLIC_AI_SUGGEST_THRESHOLD="50"
     NEXT_PUBLIC_AI_SUGGEST_REQUIRE_CAPTCHA="false"
     AI_SUGGEST_BASE_URL=""
     AI_SUGGEST_MODEL=""
     AI_SUGGEST_API_KEY=""
+    log_info "已关闭 AI 推荐。"
   fi
 
   current_rankings="$(read_env_value AI_RANKINGS_ENABLED "false")"
   if prompt_yes_no "是否启用 AI 排行榜？" "$( [[ "${current_rankings}" == "true" ]] && echo y || echo n )"; then
+    newline
     AI_RANKINGS_ENABLED="true"
     NEXT_PUBLIC_AI_RANKINGS_ENABLED="true"
+    log_info "AI 排行榜已启用。"
 
     if [[ "${NEXT_PUBLIC_AI_SUGGEST_ENABLED}" == "true" ]] && prompt_yes_no "排行榜是否复用 AI 推荐的接口配置？" "y"; then
+      newline
       reuse_ai_rankings="true"
       AI_RANKINGS_BASE_URL=""
       AI_RANKINGS_MODEL=""
       AI_RANKINGS_API_KEY=""
+      log_info "排行榜将复用 AI 推荐配置。"
     else
+      newline
       reuse_ai_rankings="false"
       AI_RANKINGS_BASE_URL="$(prompt_text "排行榜 AI 接口地址（留空表示不复用时手动填写）" "$(read_env_value AI_RANKINGS_BASE_URL "")")"
       AI_RANKINGS_MODEL="$(prompt_text "排行榜 AI 模型名称" "$(read_env_value AI_RANKINGS_MODEL "")")"
       AI_RANKINGS_API_KEY="$(prompt_text "排行榜 AI API Key" "$(read_env_value AI_RANKINGS_API_KEY "")")"
+      newline
+      log_info "排行榜独立 AI 配置已更新。"
     fi
 
     AI_RANKINGS_RUN_AT="$(prompt_text "排行榜每日执行时间（HH:mm）" "${AI_RANKINGS_RUN_AT}")"
     AI_RANKINGS_TIMEZONE="$(prompt_text "排行榜时区" "${AI_RANKINGS_TIMEZONE}")"
+    newline
+    log_info "排行榜执行时间：${AI_RANKINGS_RUN_AT}，时区：${AI_RANKINGS_TIMEZONE}"
 
     if prompt_yes_no "容器启动后立即执行一次排行榜生成？" "$( [[ "${AI_RANKINGS_RUN_ON_STARTUP}" == "true" ]] && echo y || echo n )"; then
+      newline
       AI_RANKINGS_RUN_ON_STARTUP="true"
+      log_info "已启用容器启动时自动生成排行榜。"
     else
+      newline
       AI_RANKINGS_RUN_ON_STARTUP="false"
+      log_info "已关闭容器启动时自动生成排行榜。"
     fi
 
     AI_RANKINGS_MIN_ITEMS="$(prompt_text "排行榜最少条目数" "${AI_RANKINGS_MIN_ITEMS}")"
-    AI_RANKINGS_SYNC_TOKEN="$(prompt_secret "AI_RANKINGS_SYNC_TOKEN（留空自动生成）" "$(read_env_value AI_RANKINGS_SYNC_TOKEN "")" "false" "$(generate_secret | head -c 32)")"
+    AI_RANKINGS_SYNC_TOKEN="$(prompt_secret "AI_RANKINGS_SYNC_TOKEN（留空自动生成）" "$(read_current_env_value AI_RANKINGS_SYNC_TOKEN)" "false" "$(generate_secret | head -c 32)")"
+    newline
     if [[ -z "${AI_RANKINGS_SYNC_TOKEN}" ]]; then
       AI_RANKINGS_SYNC_TOKEN="$(generate_secret | head -c 32)"
       log_info "已自动生成 AI_RANKINGS_SYNC_TOKEN。"
+    else
+      log_info "AI_RANKINGS_SYNC_TOKEN 已设置。"
     fi
   else
+    newline
     AI_RANKINGS_ENABLED="false"
     NEXT_PUBLIC_AI_RANKINGS_ENABLED="false"
     AI_RANKINGS_BASE_URL=""
@@ -374,6 +456,7 @@ run_wizard() {
     AI_RANKINGS_RUN_ON_STARTUP="false"
     AI_RANKINGS_MIN_ITEMS="20"
     AI_RANKINGS_SYNC_TOKEN=""
+    log_info "已关闭 AI 排行榜。"
   fi
 
   write_env_file
@@ -381,6 +464,7 @@ run_wizard() {
   show_summary
 
   if prompt_yes_no "是否现在直接启动容器？" "y"; then
+    newline
     ensure_compose_ready
     (cd "${ROOT_DIR}" && docker compose up -d --build)
     log_info "容器启动命令已执行。"

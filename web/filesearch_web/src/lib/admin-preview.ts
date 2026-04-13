@@ -1,5 +1,7 @@
 export type CaptchaProvider = "turnstile" | "hcaptcha" | "none";
 
+import { adminEmailPlaceholder } from "@/lib/site-config";
+
 export type AdminBootstrapState = {
   setupRequired: boolean;
   captchaProvider: CaptchaProvider;
@@ -151,7 +153,7 @@ export const getAdminDashboardPreview = (): AdminDashboardPreview => ({
     {
       title: "Live version published",
       time: "Yesterday 21:32",
-      detail: "Published by admin@freeanime.org, replacing the previous 2026-03-14 draft.",
+      detail: `Published by ${adminEmailPlaceholder}, replacing the previous 2026-03-14 draft.`,
     },
   ],
 });
@@ -162,7 +164,7 @@ export const getAdminRankingWorkspace = (): AdminRankingWorkspace => ({
     name: "Spring 2026 Live",
     generatedAt: "2026-03-15 03:08",
     publishedAt: "2026-03-15 09:20",
-    operator: "admin@freeanime.org",
+    operator: adminEmailPlaceholder,
   },
   draft: {
     id: "v20260315-draft",
@@ -212,9 +214,9 @@ export const getAdminRankingWorkspace = (): AdminRankingWorkspace => ({
     ],
   },
   versions: [
-    { id: "v20260315-published", name: "Spring 2026 Live", source: "AI Clone", status: "Published", updatedAt: "2026-03-15 09:20", sourceType: "clone", statusCode: "published", year: 2026, month: 3, generatedAt: "2026-03-15 03:08", publishedAt: "2026-03-15 09:20", operator: "admin@freeanime.org" },
-    { id: "v20260315-draft", name: "Spring 2026 Review Draft", source: "AI Clone", status: "Draft", updatedAt: "2026-03-15 10:18", sourceType: "clone", statusCode: "draft", year: 2026, month: 3, generatedAt: "2026-03-15 03:08", operator: "admin@freeanime.org" },
+    { id: "v20260315-published", name: "Spring 2026 Live", source: "AI Clone", status: "Published", updatedAt: "2026-03-15 09:20", sourceType: "clone", statusCode: "published", year: 2026, month: 3, generatedAt: "2026-03-15 03:08", publishedAt: "2026-03-15 09:20", operator: adminEmailPlaceholder },
+    { id: "v20260315-draft", name: "Spring 2026 Review Draft", source: "AI Clone", status: "Draft", updatedAt: "2026-03-15 10:18", sourceType: "clone", statusCode: "draft", year: 2026, month: 3, generatedAt: "2026-03-15 03:08", operator: adminEmailPlaceholder },
     { id: "v20260315-ai", name: "AI Run 2026-03-15 03:08", source: "AI Generated", status: "Pending", updatedAt: "2026-03-15 03:08", sourceType: "ai", statusCode: "generated", year: 2026, month: 3, generatedAt: "2026-03-15 03:08" },
-    { id: "v20260314-manual", name: "Manual Monthly Experiment", source: "Handmade", status: "Draft", updatedAt: "2026-03-14 18:46", sourceType: "manual", statusCode: "draft", year: 2026, month: 3, generatedAt: "2026-03-14 18:46", operator: "admin@freeanime.org" },
+    { id: "v20260314-manual", name: "Manual Monthly Experiment", source: "Handmade", status: "Draft", updatedAt: "2026-03-14 18:46", sourceType: "manual", statusCode: "draft", year: 2026, month: 3, generatedAt: "2026-03-14 18:46", operator: adminEmailPlaceholder },
   ],
 });

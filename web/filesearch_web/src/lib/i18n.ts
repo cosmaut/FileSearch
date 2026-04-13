@@ -177,10 +177,10 @@ const translations: Record<Language, Translations> = {
       improveCommunity: "与我们一起完善社区",
     },
     hero: {
-      title: "无需登录即可搜索全部动漫资源",
+      title: "无需登录即可搜索网盘文件与文档资源",
     },
     search: {
-      placeholder: "搜索动漫…",
+      placeholder: "搜索文件、文档、资源…",
       cta: "搜索",
       loading: "正在查找更多资源…",
       emptyQuery: "请输入搜索关键词",
@@ -274,7 +274,7 @@ const translations: Record<Language, Translations> = {
     about: {
       title: "关于 FileSearch",
       content:
-        "FileSearch 由 Cosmaut 维护，统一接口聚合网盘动漫资源，免登录即可快速搜索。",
+        "FileSearch 由 Cosmaut 维护，统一接口聚合网盘文件、文档与多种资源，免登录即可快速搜索。",
       contact: "FileSearch by Cosmaut",
       license: "FileSearch 采用 CC BY-NC 4.0 (署名-非商业性使用 4.0 国际) 许可证",
     },
@@ -296,10 +296,10 @@ const translations: Record<Language, Translations> = {
       improveCommunity: "一起完善社群",
     },
     hero: {
-      title: "免登入即可搜尋全部動漫資源",
+      title: "免登入即可搜尋網盤檔案與文件資源",
     },
     search: {
-      placeholder: "搜尋動漫…",
+      placeholder: "搜尋檔案、文件、資源…",
       cta: "搜尋",
       loading: "正在尋找更多資源…",
       emptyQuery: "請輸入搜尋關鍵字",
@@ -393,7 +393,7 @@ const translations: Record<Language, Translations> = {
     about: {
       title: "關於 FileSearch",
       content:
-        "FileSearch 由 Cosmaut 維護，統一介面聚合網盤動漫資源，免登入即可快速搜尋。",
+        "FileSearch 由 Cosmaut 維護，統一介面聚合網盤檔案、文件與多種資源，免登入即可快速搜尋。",
       contact: "FileSearch by Cosmaut",
       license: "FileSearch 採用 CC BY-NC 4.0 (署名-非商業性使用 4.0 國際) 許可證",
     },
@@ -415,10 +415,10 @@ const translations: Record<Language, Translations> = {
       improveCommunity: "Help Improve the Community",
     },
     hero: {
-      title: "Search all anime resources without login",
+      title: "Search files, documents, and cloud resources without login",
     },
     search: {
-      placeholder: "Search anime…",
+      placeholder: "Search files, docs, resources…",
       cta: "Search",
       loading: "Searching for more resources…",
       emptyQuery: "Please enter a search term",
@@ -514,7 +514,7 @@ const translations: Record<Language, Translations> = {
     about: {
       title: "About FileSearch",
       content:
-        "FileSearch, maintained by Cosmaut, unifies cloud search so you can find anime resources quickly without logging in.",
+        "FileSearch, maintained by Cosmaut, unifies cloud search so you can quickly find files, documents, and shared resources without logging in.",
       contact: "FileSearch by Cosmaut",
       license: "FileSearch is licensed under CC BY-NC 4.0 (Attribution-NonCommercial 4.0 International)",
     },
@@ -536,10 +536,10 @@ const translations: Record<Language, Translations> = {
       improveCommunity: "コミュニティ改善に参加",
     },
     hero: {
-      title: "ログインなしで全アニメを検索",
+      title: "ログインなしでファイルやドキュメントを検索",
     },
     search: {
-      placeholder: "アニメを検索…",
+      placeholder: "ファイル、文書、リソースを検索…",
       cta: "検索",
       loading: "さらにリソースを検索中…",
       emptyQuery: "検索キーワードを入力してください",
@@ -635,7 +635,7 @@ const translations: Record<Language, Translations> = {
     about: {
       title: "FileSearch とは",
       content:
-        "FileSearch は Cosmaut が保守し、ログイン不要でアニメ資源を素早く見つけられる統合クラウド検索です。",
+        "FileSearch は Cosmaut が保守する統合クラウド検索で、ログイン不要でファイル、文書、共有リソースを素早く探せます。",
       contact: "FileSearch by Cosmaut",
       license: "FileSearch は CC BY-NC 4.0 (表示-非営利 4.0 国際) ライセンスの下で提供されています",
     },
@@ -657,10 +657,10 @@ const translations: Record<Language, Translations> = {
       improveCommunity: "Помочь развивать сообщество",
     },
     hero: {
-      title: "Ищите все аниме без входа в систему",
+      title: "Ищите файлы, документы и ресурсы без входа",
     },
     search: {
-      placeholder: "Поиск аниме…",
+      placeholder: "Поиск файлов, документов, ресурсов…",
       cta: "Искать",
       loading: "Поиск дополнительных ресурсов…",
       emptyQuery: "Введите поисковый запрос",
@@ -756,7 +756,7 @@ const translations: Record<Language, Translations> = {
     about: {
       title: "О FileSearch",
       content:
-        "FileSearch, поддерживаемый Cosmaut, объединяет облачные поиски, позволяя быстро находить аниме без входа.",
+        "FileSearch, поддерживаемый Cosmaut, объединяет облачный поиск и помогает быстро находить файлы, документы и общие ресурсы без входа.",
       contact: "FileSearch by Cosmaut",
       license: "FileSearch распространяется под лицензией CC BY-NC 4.0 (Attribution-NonCommercial 4.0 International)",
     },
@@ -778,10 +778,10 @@ const translations: Record<Language, Translations> = {
       improveCommunity: "Améliorer la communauté avec nous",
     },
     hero: {
-      title: "Recherchez tous les animés sans connexion",
+      title: "Recherchez fichiers, documents et ressources sans connexion",
     },
     search: {
-      placeholder: "Rechercher un animé…",
+      placeholder: "Rechercher des fichiers, documents, ressources…",
       cta: "Rechercher",
       loading: "Recherche de nouvelles ressources…",
       emptyQuery: "Veuillez saisir un terme de recherche",
@@ -877,7 +877,7 @@ const translations: Record<Language, Translations> = {
     about: {
       title: "À propos de FileSearch",
       content:
-        "FileSearch, maintenu par Cosmaut, unifie la recherche cloud pour trouver rapidement des animés sans connexion.",
+        "FileSearch, maintenu par Cosmaut, unifie la recherche cloud pour retrouver rapidement des fichiers, documents et ressources partagées sans connexion.",
       contact: "FileSearch by Cosmaut",
       license: "FileSearch est sous licence CC BY-NC 4.0 (Attribution-Pas d'Utilisation Commerciale 4.0 International)",
     },

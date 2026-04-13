@@ -19,38 +19,38 @@ type LangConfig = {
 const langMap: Record<string, LangConfig> = {
   "zh-CN": {
     title: `${siteBrand} | 文件搜索`,
-    description: "免费搜索动漫与网盘资源，无需登录，快速聚合多平台结果。",
-    keywords: ["免费搜索动漫", "搜索动漫", "免费动漫", "无需登录", "网盘搜索", "动漫搜索"],
+    description: "免费搜索网盘文件、文档与多种资源，无需登录，快速聚合多平台结果。",
+    keywords: ["文件搜索", "文档搜索", "资源搜索", "无需登录", "网盘搜索", "网盘文件"],
     ogLocale: "zh_CN",
   },
   "zh-TW": {
     title: `${siteBrand} | 文件搜尋`,
-    description: "免費搜尋動漫與網盤資源，無需登入，快速聚合多平台結果。",
-    keywords: ["免費搜尋動漫", "搜尋動漫", "免費動漫", "無需登入", "網盤搜尋", "動漫搜尋"],
+    description: "免費搜尋網盤檔案、文件與多種資源，無需登入，快速聚合多平台結果。",
+    keywords: ["檔案搜尋", "文件搜尋", "資源搜尋", "無需登入", "網盤搜尋", "網盤檔案"],
     ogLocale: "zh_TW",
   },
   en: {
-    title: `${siteBrand} | Anime Search`,
-    description: "Free anime and netdisk search with no login required, fast multi-source results.",
-    keywords: ["anime search", "free anime", "no login", "netdisk search", "anime resources"],
+    title: `${siteBrand} | File Search`,
+    description: "Free file, document, and cloud resource search with no login required, fast multi-source results.",
+    keywords: ["file search", "document search", "no login", "netdisk search", "cloud resources"],
     ogLocale: "en_US",
   },
   ja: {
-    title: `${siteBrand} | アニメ検索`,
-    description: "無料でアニメとクラウド資源を検索、ログイン不要、複数ソースを高速統合。",
-    keywords: ["アニメ検索", "無料アニメ", "ログイン不要", "クラウド検索"],
+    title: `${siteBrand} | ファイル検索`,
+    description: "ファイル、文書、クラウド資源を無料で検索。ログイン不要で複数ソースを高速統合。",
+    keywords: ["ファイル検索", "文書検索", "ログイン不要", "クラウド検索"],
     ogLocale: "ja_JP",
   },
   ru: {
-    title: `${siteBrand} | Поиск аниме`,
-    description: "Бесплатный поиск аниме и облачных ресурсов без входа, быстрые результаты.",
-    keywords: ["поиск аниме", "бесплатное аниме", "без входа", "поиск облака"],
+    title: `${siteBrand} | Поиск файлов`,
+    description: "Бесплатный поиск файлов, документов и облачных ресурсов без входа, быстрые результаты.",
+    keywords: ["поиск файлов", "поиск документов", "без входа", "облачные ресурсы"],
     ogLocale: "ru_RU",
   },
   fr: {
-    title: `${siteBrand} | Recherche Anime`,
-    description: "Recherche gratuite d'anime et de ressources cloud sans connexion, résultats rapides.",
-    keywords: ["recherche anime", "anime gratuit", "sans connexion", "recherche cloud"],
+    title: `${siteBrand} | Recherche de Fichiers`,
+    description: "Recherche gratuite de fichiers, documents et ressources cloud sans connexion, résultats rapides.",
+    keywords: ["recherche de fichiers", "recherche de documents", "sans connexion", "ressources cloud"],
     ogLocale: "fr_FR",
   },
 };
@@ -74,7 +74,7 @@ export async function generateMetadata({
   if (q) {
     return {
       title: `${q} | ${siteBrand}`,
-      description: `${q} - 进入 ${siteBrand} 首页并快速搜索相关动漫资源。`,
+      description: `${q} - 进入 ${siteBrand} 首页并快速搜索相关文件、文档与网盘资源。`,
       robots: {
         index: true,
         follow: true,
@@ -84,7 +84,7 @@ export async function generateMetadata({
       },
       openGraph: {
         title: `${q} | ${siteBrand}`,
-        description: `${q} - 进入 ${siteBrand} 首页并快速搜索相关动漫资源。`,
+        description: `${q} - 进入 ${siteBrand} 首页并快速搜索相关文件、文档与网盘资源。`,
         url: `${siteUrl}/?q=${encodeURIComponent(q)}`,
         siteName: siteBrand,
         locale: config.ogLocale,
@@ -93,7 +93,7 @@ export async function generateMetadata({
       twitter: {
         card: "summary",
         title: `${q} | ${siteBrand}`,
-        description: `${q} - 进入 ${siteBrand} 首页并快速搜索相关动漫资源。`,
+        description: `${q} - 进入 ${siteBrand} 首页并快速搜索相关文件、文档与网盘资源。`,
       },
     };
   }

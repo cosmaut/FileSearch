@@ -34,6 +34,23 @@ newline() {
   echo
 }
 
+normalize_site_url() {
+  local raw normalized
+  raw="${1:-}"
+  normalized="$(printf '%s' "${raw}" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//' -e 's/^`//' -e 's/`$//' -e 's/^"//' -e 's/"$//' -e "s/^'//" -e "s/'$//" -e 's:/*$::')"
+  printf '%s' "${normalized}"
+}
+
+panel_border() {
+  echo "================================================================"
+}
+
+panel_title() {
+  panel_border
+  echo "$1"
+  panel_border
+}
+
 command_exists() {
   command -v "$1" >/dev/null 2>&1
 }
@@ -267,9 +284,110 @@ show_summary() {
   echo "配置文件: ${ENV_FILE}"
 }
 
+show_post_start_notice() {
+  local first_setup admin_user admin_password password_generated jwt_secret jwt_generated rankings_token rankings_generated admin_login_url dashboard_url reverse_proxy_target
+  first_setup="${1:-false}"
+  admin_user="${2:-}"
+  admin_password="${3:-}"
+  password_generated="${4:-false}"
+  jwt_secret="${5:-}"
+  jwt_generated="${6:-false}"
+  rankings_token="${7:-}"
+  rankings_generated="${8:-false}"
+  reverse_proxy_target="http://127.0.0.1:3200"
+  admin_login_url="${NEXT_PUBLIC_SITE_URL}/admin"
+  dashboard_url="${NEXT_PUBLIC_SITE_URL}/admin/dashboard"
+
+  panel_title " FileSearch 重要信息 "
+  if [[ "${first_setup}" == "true" ]]; then
+    log_info "[首次部署成功] 请立即保存以下重要信息"
+  else
+    log_info "[部署完成] 如本次修改了凭据或域名，请确认并保存以下信息"
+  fi
+  echo "站点地址: ${NEXT_PUBLIC_SITE_URL}"
+  echo "本机访问: ${reverse_proxy_target}"
+  echo "首页地址: ${NEXT_PUBLIC_SITE_URL}/"
+  echo "管理登录: ${admin_login_url}"
+  echo "管理后台: ${dashboard_url}"
+  echo "配置文件: ${ENV_FILE}"
+  newline
+
+  if [[ "${AUTH_ENABLED}" == "true" ]]; then
+    panel_title " 管理员信息 "
+    echo "管理员用户名: ${admin_user}"
+    if [[ "${first_setup}" == "true" || "${password_generated}" == "true" ]]; then
+      echo "管理员密码: ${admin_password}"
+    else
+      echo "管理员密码: 本次未重新展示，如需查看请打开 ${ENV_FILE}"
+    fi
+
+    if [[ "${first_setup}" == "true" || "${jwt_generated}" == "true" ]]; then
+      echo "AUTH_JWT_SECRET: ${jwt_secret}"
+    else
+      echo "AUTH_JWT_SECRET: 本次未重新展示，如需查看请打开 ${ENV_FILE}"
+    fi
+    newline
+  fi
+
+  if [[ "${AI_RANKINGS_ENABLED}" == "true" ]]; then
+    panel_title " 排行榜同步信息 "
+    if [[ "${first_setup}" == "true" || "${rankings_generated}" == "true" ]]; then
+      echo "AI_RANKINGS_SYNC_TOKEN: ${rankings_token}"
+    else
+      echo "AI_RANKINGS_SYNC_TOKEN: 本次未重新展示，如需查看请打开 ${ENV_FILE}"
+    fi
+    newline
+  fi
+
+  panel_title " 反向代理提醒 "
+  echo "如果你的域名访问后仍显示 'Welcome to nginx!'，说明反向代理还没有指向 FileSearch 容器。"
+  echo "宝塔 / Nginx 反代目标: ${reverse_proxy_target}"
+  echo "建议发送域名: \$host"
+  echo "示例域名: ${NEXT_PUBLIC_SITE_URL}"
+  newline
+
+  panel_title " 默认访问路径 "
+  echo "首页: /"
+  echo "管理登录页: /admin"
+  echo "管理后台首页: /admin/dashboard"
+  if [[ "${AI_RANKINGS_ENABLED}" == "true" ]]; then
+    echo "排行榜页: /rankings"
+  fi
+  newline
+
+  panel_title " 常用命令 "
+  echo "./setup.sh               打开部署助手"
+  echo "./setup.sh status        查看容器状态"
+  echo "./setup.sh logs          查看容器日志"
+  echo "./setup.sh up            重建并启动容器"
+  echo "./setup.sh down          停止容器"
+  echo "docker compose ps        查看 Compose 状态"
+  echo "docker compose logs -f   实时查看日志"
+  newline
+
+  panel_title " 保存提醒 "
+  echo "请立即将以上敏感信息复制到本地密码管理器、加密笔记或其他安全位置。"
+  echo "首次部署完成后，脚本会集中展示一次完整信息；后续出于安全考虑，部分旧凭据不会重复明文展示。"
+  echo "请勿将管理员密码、AUTH_JWT_SECRET、AI_RANKINGS_SYNC_TOKEN 截图外传。"
+
+  if [[ "${NEXT_PUBLIC_SITE_URL}" == http://127.0.0.1* || "${NEXT_PUBLIC_SITE_URL}" == http://localhost* || "${NEXT_PUBLIC_SITE_URL}" == https://localhost* ]]; then
+    newline
+    log_warn "当前站点地址仍是本地地址。若要使用公网域名，请重新运行 ./setup.sh 并填写正式域名后再重建容器。"
+  fi
+}
+
 run_wizard() {
-  local existing_auth_users admin_user generated_password generated_secret current_captcha current_ai current_rankings
-  local captcha_provider
+  local existing_auth_users admin_user admin_password generated_password generated_secret generated_rankings_token current_captcha current_ai current_rankings
+  local captcha_provider is_first_setup admin_password_generated auth_jwt_secret_generated ai_rankings_sync_token_generated
+
+  is_first_setup="false"
+  admin_password_generated="false"
+  auth_jwt_secret_generated="false"
+  ai_rankings_sync_token_generated="false"
+
+  if [[ ! -f "${ENV_FILE}" ]]; then
+    is_first_setup="true"
+  fi
 
   echo "=============================="
   echo "FileSearch 交互式部署向导 v${VERSION}"
@@ -289,7 +407,7 @@ run_wizard() {
   ADMIN_DATA_DIR="$(read_env_value ADMIN_DATA_DIR "/app/data/admin")"
   AI_SUGGEST_PROMPT="$(read_env_value AI_SUGGEST_PROMPT "")"
 
-  NEXT_PUBLIC_SITE_URL="$(prompt_text "站点公开访问地址（用于 SEO / canonical / sitemap）" "${NEXT_PUBLIC_SITE_URL}")"
+  NEXT_PUBLIC_SITE_URL="$(normalize_site_url "$(prompt_text "站点公开访问地址（用于 SEO / canonical / sitemap）" "${NEXT_PUBLIC_SITE_URL}")")"
   newline
   log_info "已设置站点地址：${NEXT_PUBLIC_SITE_URL}"
 
@@ -309,6 +427,7 @@ run_wizard() {
     admin_password="$(prompt_secret "管理员密码（建议不要包含空格或 #）" "" "false" "${generated_password}")"
     newline
     if [[ "${admin_password}" == "${generated_password}" ]]; then
+      admin_password_generated="true"
       log_info "已自动生成管理员密码：${admin_password}"
     else
       log_info "管理员密码已设置。"
@@ -323,6 +442,7 @@ run_wizard() {
     AUTH_JWT_SECRET="$(prompt_secret "AUTH_JWT_SECRET（留空自动生成）" "$(read_current_env_value AUTH_JWT_SECRET)" "false" "${generated_secret}")"
     newline
     if [[ "${AUTH_JWT_SECRET}" == "${generated_secret}" ]]; then
+      auth_jwt_secret_generated="true"
       log_info "已自动生成 AUTH_JWT_SECRET。"
     else
       log_info "AUTH_JWT_SECRET 已设置。"
@@ -436,10 +556,11 @@ run_wizard() {
     fi
 
     AI_RANKINGS_MIN_ITEMS="$(prompt_text "排行榜最少条目数" "${AI_RANKINGS_MIN_ITEMS}")"
-    AI_RANKINGS_SYNC_TOKEN="$(prompt_secret "AI_RANKINGS_SYNC_TOKEN（留空自动生成）" "$(read_current_env_value AI_RANKINGS_SYNC_TOKEN)" "false" "$(generate_secret | head -c 32)")"
+    generated_rankings_token="$(generate_secret | head -c 32)"
+    AI_RANKINGS_SYNC_TOKEN="$(prompt_secret "AI_RANKINGS_SYNC_TOKEN（留空自动生成）" "$(read_current_env_value AI_RANKINGS_SYNC_TOKEN)" "false" "${generated_rankings_token}")"
     newline
-    if [[ -z "${AI_RANKINGS_SYNC_TOKEN}" ]]; then
-      AI_RANKINGS_SYNC_TOKEN="$(generate_secret | head -c 32)"
+    if [[ "${AI_RANKINGS_SYNC_TOKEN}" == "${generated_rankings_token}" ]]; then
+      ai_rankings_sync_token_generated="true"
       log_info "已自动生成 AI_RANKINGS_SYNC_TOKEN。"
     else
       log_info "AI_RANKINGS_SYNC_TOKEN 已设置。"
@@ -468,6 +589,8 @@ run_wizard() {
     ensure_compose_ready
     (cd "${ROOT_DIR}" && docker compose up -d --build)
     log_info "容器启动命令已执行。"
+    newline
+    show_post_start_notice "${is_first_setup}" "${admin_user}" "${admin_password}" "${admin_password_generated}" "${AUTH_JWT_SECRET}" "${auth_jwt_secret_generated}" "${AI_RANKINGS_SYNC_TOKEN}" "${ai_rankings_sync_token_generated}"
   fi
 }
 

@@ -13,25 +13,22 @@ export const metadata: Metadata = {
     template: `%s | ${siteBrand}`,
   },
   description:
-    `${siteBrand}（文件搜索）- 免费搜索动漫与网盘资源，无需登录，快速聚合多平台结果。`,
+    `${siteBrand}（文件搜索）- 免费搜索网盘文件、文档与多种资源，无需登录，快速聚合多平台结果。`,
   keywords: [
     "FileSearch",
     "文件搜索",
-    "免费搜索动漫",
-    "搜索动漫",
-    "免费动漫",
+    "网盘文件搜索",
+    "文档搜索",
+    "资源搜索",
     "无需登录",
-    "动漫搜索",
     "网盘搜索",
-    "anime search",
-    "free anime search",
-    "anime resources",
-    "anime streaming search",
+    "file search",
+    "document search",
+    "cloud resource search",
     "netdisk search",
-    "アニメ検索",
-    "無料アニメ",
-    "бесплатный поиск аниме",
-    "recherche anime gratuite",
+    "ファイル検索",
+    "документы поиск",
+    "recherche de fichiers",
   ],
   alternates: {
     canonical: "/",
@@ -47,7 +44,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: `${siteBrand} | 文件搜索`,
     description:
-      "免费搜索动漫与网盘资源，无需登录，快速聚合多平台结果。",
+      "免费搜索网盘文件、文档与多种资源，无需登录，快速聚合多平台结果。",
     url: siteUrl,
     siteName: siteBrand,
     locale: "zh_CN",
@@ -57,7 +54,7 @@ export const metadata: Metadata = {
     card: "summary",
     title: `${siteBrand} | 文件搜索`,
     description:
-      "免费搜索动漫与网盘资源，无需登录，快速聚合多平台结果。",
+      "免费搜索网盘文件、文档与多种资源，无需登录，快速聚合多平台结果。",
   },
   robots: {
     index: true,
@@ -89,7 +86,7 @@ export default async function RootLayout({
               alternateName: "文件搜索",
               url: siteUrl,
               description:
-                "免费搜索动漫与网盘资源，无需登录，快速聚合多平台结果。",
+                "免费搜索网盘文件、文档与多种资源，无需登录，快速聚合多平台结果。",
               sameAs: [siteRepositoryUrl],
               inLanguage: ["zh-CN", "zh-TW", "en", "ja", "ru", "fr"],
             }),

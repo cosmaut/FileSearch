@@ -87,6 +87,7 @@ func AuthMiddleware() gin.HandlerFunc {
 		publicPaths := []string{
 			"/api/auth/login",
 			"/api/auth/logout",
+			"/api/search",
 			"/api/health", // 健康检查接口可选择是否需要认证
 		}
 

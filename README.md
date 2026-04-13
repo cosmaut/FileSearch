@@ -66,6 +66,34 @@ FileSearch 是一个高性能的开源网盘资源搜索工具，当前仓库用
 
 ## 🚀 快速部署
 
+### 一行命令安装（推荐新手）
+
+如果你希望像 `bbr` 一样，一条命令完成下载、安装并自动进入交互式引导，可直接执行：
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/cosmaut/FileSearch/main/install.sh | sudo bash
+```
+
+安装脚本会自动完成以下操作：
+
+- 检查并安装基础依赖（如 `git`、`curl`、`ca-certificates`）
+- 自动安装 Docker 与 Docker Compose（若系统中尚未安装）
+- 下载或更新 `FileSearch` 项目代码
+- 自动授予 `setup.sh` 执行权限
+- 安装全局命令 `filesearch`
+- 安装完成后直接进入交互式部署向导
+
+安装完成后，后续常用命令如下：
+
+```bash
+filesearch               # 打开部署助手
+filesearch wizard        # 运行交互式配置向导
+filesearch up            # 构建并启动容器
+filesearch status        # 查看容器状态
+filesearch logs          # 查看容器日志
+filesearch down          # 停止容器
+```
+
 ### 使用 Docker Compose（推荐）
 
 1. 克隆项目文件
@@ -93,7 +121,7 @@ docker-compose up -d
 
 ### 交互式部署（推荐新手）
 
-如果你不想手动编辑 `docker-compose.yml`，可以直接使用仓库根目录的交互式引导脚本。脚本会逐项询问认证、验证码、AI 推荐、AI 排行榜等配置，并自动生成根目录 `.env` 文件。
+如果你已经手动克隆了仓库，不想手动编辑 `docker-compose.yml`，也可以直接使用仓库根目录的交互式引导脚本。脚本会逐项询问认证、验证码、AI 推荐、AI 排行榜、站点公开地址等配置，并自动生成根目录 `.env` 文件。配置完成并成功启动容器后，脚本会集中展示管理员信息、访问路径、反代目标和常用命令，提示用户立即保存。
 
 ```bash
 chmod +x setup.sh

@@ -13,4 +13,5 @@ export const siteUrl = normalizeUrl(process.env.NEXT_PUBLIC_SITE_URL);
 export const siteBrand = "FileSearch";
 export const siteOrganization = "Cosmaut";
 export const siteRepositoryUrl = "https://github.com/cosmaut/FileSearch";
+export const siteIssuesUrl = `${siteRepositoryUrl}/issues`;
 export const adminEmailPlaceholder = "admin@filesearch.local";

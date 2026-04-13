@@ -171,10 +171,10 @@ type Translations = {
 const translations: Record<Language, Translations> = {
   zh: {
     nav: {
-      community: "社区",
-      download: "下载",
-      about: "关于我们",
-      improveCommunity: "与我们一起完善社区",
+      community: "开始搜索",
+      download: "开源仓库",
+      about: "项目说明",
+      improveCommunity: "提交源线索",
     },
     hero: {
       title: "无需登录即可搜索网盘文件与文档资源",
@@ -290,10 +290,10 @@ const translations: Record<Language, Translations> = {
   },
   "zh-TW": {
     nav: {
-      community: "社群",
-      download: "下載",
-      about: "關於我們",
-      improveCommunity: "一起完善社群",
+      community: "開始搜尋",
+      download: "開源倉庫",
+      about: "專案說明",
+      improveCommunity: "提交來源線索",
     },
     hero: {
       title: "免登入即可搜尋網盤檔案與文件資源",
@@ -409,10 +409,10 @@ const translations: Record<Language, Translations> = {
   },
   en: {
     nav: {
-      community: "Community",
-      download: "Download",
-      about: "About Us",
-      improveCommunity: "Help Improve the Community",
+      community: "Search",
+      download: "Repository",
+      about: "About",
+      improveCommunity: "Submit Sources",
     },
     hero: {
       title: "Search files, documents, and cloud resources without login",
@@ -530,10 +530,10 @@ const translations: Record<Language, Translations> = {
   },
   ja: {
     nav: {
-      community: "コミュニティ",
-      download: "ダウンロード",
-      about: "私たちについて",
-      improveCommunity: "コミュニティ改善に参加",
+      community: "検索開始",
+      download: "リポジトリ",
+      about: "プロジェクト概要",
+      improveCommunity: "ソース提案",
     },
     hero: {
       title: "ログインなしでファイルやドキュメントを検索",
@@ -651,10 +651,10 @@ const translations: Record<Language, Translations> = {
   },
   ru: {
     nav: {
-      community: "Сообщество",
-      download: "Скачать",
-      about: "О нас",
-      improveCommunity: "Помочь развивать сообщество",
+      community: "Поиск",
+      download: "Репозиторий",
+      about: "О проекте",
+      improveCommunity: "Предложить источники",
     },
     hero: {
       title: "Ищите файлы, документы и ресурсы без входа",
@@ -772,10 +772,10 @@ const translations: Record<Language, Translations> = {
   },
   fr: {
     nav: {
-      community: "Communauté",
-      download: "Télécharger",
-      about: "À propos",
-      improveCommunity: "Améliorer la communauté avec nous",
+      community: "Rechercher",
+      download: "Depot",
+      about: "A propos",
+      improveCommunity: "Proposer des sources",
     },
     hero: {
       title: "Recherchez fichiers, documents et ressources sans connexion",

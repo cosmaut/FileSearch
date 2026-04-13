@@ -12,18 +12,17 @@ FileSearch 是一个高性能的开源网盘资源搜索工具，当前仓库用
 
 ## 🌐 在线访问
 
-**在线体验地址：** [https://search.freeanime.org](https://search.freeanime.org)
+**当前部署示例：** [https://search.bittool.top](https://search.bittool.top)
 
-**新版本测试地址：** [https://search-bate.freeanime.org](https://search-bate.freeanime.org)
-
-**测试版本新增功能：**
-- 新增 AI 动漫排行榜入口与页面（年榜 / 月榜 / 日榜，可展开查看）
+**当前版本重点功能：**
+- 新增 AI 排行榜入口与页面（年榜 / 月榜 / 日榜，可展开查看）
 - 榜单条目点击后跳转到主页并自动填写关键词（不自动发起搜索）
 - 支持按当前站点语言使用本地化关键词跳转（中文环境优先中文名称）
 - 排行榜生成支持重试机制、失败日志输出与兜底展示页
 - 支持排行榜 SEO 页面与站点地图自动扩展（可配置开关）
+- 支持一行命令安装、交互式部署向导与首次部署后的重要信息提示
 
-> 由 [Freeanime.org](https://freeanime.org) 赞助 Maishan Inc. 与 Freeanime.org组织 拥有 limitless-search-web 前端页面的全部版权，未经许可禁止商用。
+> 当前仓库维护 FileSearch 自部署版本，站点品牌、域名、频道列表、插件与部署参数均可按需自定义。
 
 ## 📸 界面预览
 
@@ -448,5 +447,5 @@ environment:
 
 ---
 
-后端 基于 [PanSou](https://github.com/fish2018/pansou) 项目开发 limitless-search-backend 部分。以MIT许可证开源。
-前端 limitless-search-web Maishan Inc. 与 Freeanime.org组织 拥有 limitless-search-web 前端页面的全部版权，未经许可禁止商用。
+后端基于 [PanSou](https://github.com/fish2018/pansou) 项目开发了 `filesearch-backend` 部分，并以 MIT 许可证开源。
+当前仓库以前端、部署脚本与运维流程为主持续维护，具体使用请以仓库内的许可证与说明文件为准。

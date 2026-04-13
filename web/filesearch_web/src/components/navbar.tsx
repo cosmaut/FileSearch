@@ -5,6 +5,7 @@ import { Moon, Sun, Languages, Menu, X, ChevronDown, Check, Github } from "lucid
 import { useTheme } from "next-themes"
 import { motion, AnimatePresence } from "framer-motion"
 import { useLanguage, languages } from "@/lib/i18n"
+import { siteIssuesUrl, siteRepositoryUrl } from "@/lib/site-config"
 import { cn } from "@/lib/utils"
 
 type NavbarProps = {
@@ -38,10 +39,10 @@ export function Navbar({ showRankings = false }: NavbarProps) {
         {/* Desktop Menu */}
         <div className="hidden md:flex items-center gap-8">
           {showRankings && <a href="/rankings" className="text-sm font-medium hover:text-neutral-500 transition-colors">排行榜</a>}
-          <a href="#" className="text-sm font-medium hover:text-neutral-500 transition-colors">{t.nav.community}</a>
-          <a href="#download" className="text-sm font-medium hover:text-neutral-500 transition-colors">{t.nav.download}</a>
+          <a href="#search-anchor-inline" className="text-sm font-medium hover:text-neutral-500 transition-colors">{t.nav.community}</a>
+          <a href={siteRepositoryUrl} target="_blank" rel="noopener noreferrer" className="text-sm font-medium hover:text-neutral-500 transition-colors">{t.nav.download}</a>
           <a href="#about" className="text-sm font-medium hover:text-neutral-500 transition-colors">{t.nav.about}</a>
-          <a href="#about" className="text-sm font-medium hover:text-neutral-500 transition-colors">{t.nav.improveCommunity}</a>
+          <a href={siteIssuesUrl} target="_blank" rel="noopener noreferrer" className="text-sm font-medium hover:text-neutral-500 transition-colors">{t.nav.improveCommunity}</a>
         </div>
 
         {/* Controls */}
@@ -120,10 +121,10 @@ export function Navbar({ showRankings = false }: NavbarProps) {
             className="absolute top-16 left-0 right-0 bg-white dark:bg-black border-b border-neutral-200 dark:border-neutral-800 md:hidden p-4 flex flex-col gap-4 shadow-2xl"
           >
             {showRankings && <a href="/rankings" className="text-lg font-medium" onClick={toggleMenu}>排行榜</a>}
-            <a href="#" className="text-lg font-medium" onClick={toggleMenu}>{t.nav.community}</a>
-            <a href="#download" className="text-lg font-medium" onClick={toggleMenu}>{t.nav.download}</a>
+            <a href="#search-anchor-inline" className="text-lg font-medium" onClick={toggleMenu}>{t.nav.community}</a>
+            <a href={siteRepositoryUrl} target="_blank" rel="noopener noreferrer" className="text-lg font-medium" onClick={toggleMenu}>{t.nav.download}</a>
             <a href="#about" className="text-lg font-medium" onClick={toggleMenu}>{t.nav.about}</a>
-            <a href="#about" className="text-lg font-medium" onClick={toggleMenu}>{t.nav.improveCommunity}</a>
+            <a href={siteIssuesUrl} target="_blank" rel="noopener noreferrer" className="text-lg font-medium" onClick={toggleMenu}>{t.nav.improveCommunity}</a>
             
             <div className="flex flex-col gap-4 pt-4 border-t border-neutral-200 dark:border-neutral-800">
                {/* Mobile GitHub Button */}

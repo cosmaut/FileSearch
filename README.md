@@ -91,6 +91,25 @@ cd FileSearch
 docker-compose up -d
 ```
 
+### 交互式部署（推荐新手）
+
+如果你不想手动编辑 `docker-compose.yml`，可以直接使用仓库根目录的交互式引导脚本。脚本会逐项询问认证、验证码、AI 推荐、AI 排行榜等配置，并自动生成根目录 `.env` 文件。
+
+```bash
+chmod +x setup.sh
+./setup.sh
+```
+
+也支持直接执行子命令：
+
+```bash
+./setup.sh wizard   # 运行交互式配置向导
+./setup.sh up       # 构建并启动容器
+./setup.sh status   # 查看容器状态
+./setup.sh logs     # 查看日志
+./setup.sh down     # 停止容器
+```
+
 4. 访问服务：
 - Web 界面：http://localhost:3200
 - 后端 API：默认仅在 Docker 内部网络 `http://backend:8888` 可访问，不直接暴露到宿主机
@@ -109,6 +128,8 @@ docker-compose down
 ## 🔧 前端环境配置
 
 Docker 部署不再依赖 `web/filesearch_web/.env`。前端相关配置统一写在根目录 `docker-compose.yml` 的 `web.build.args` 和 `web.environment` 中。
+
+如果使用 `./setup.sh`，脚本会把常用配置写入根目录 `.env`，`docker-compose.yml` 会优先读取这些值，无需手动修改 YAML。
 
 ### Docker 部署配置
 
